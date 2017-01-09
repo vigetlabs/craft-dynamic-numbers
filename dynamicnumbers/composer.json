@@ -1,0 +1,14 @@
+{
+	"name": "/dynamicnumbers",
+	"description": "Interface to manage numbers to be reused throughout the site and only edited once",
+	"type": "craft-plugin",
+	"authors": [
+		{
+			"name": "Trevor Davis",
+			"homepage": "https://www.viget.com"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}

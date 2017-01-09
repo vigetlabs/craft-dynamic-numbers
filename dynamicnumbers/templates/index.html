@@ -1,0 +1,46 @@
+{% extends '_layouts/cp' %}
+
+{% set title = 'Dynamic Numbers'|t %}
+{% set dynamicNumbers = craft.dynamicNumbers.getAll %}
+
+{% set extraPageHeaderHtml %}
+	<div class="buttons right">
+		<a href="{{ url('dynamicnumbers/new') }}" class="btn submit add icon">{{ 'New Dynamic Number' | t }}</a>
+	</div>
+{% endset %}
+
+
+{% set content %}
+	{% if dynamicNumbers | length == 0 %}
+		<p id="no-dynamicnumbers">{{ 'There are no dynamic numbers!' | t }}</p>
+	{% else %}
+		<table id="dynamicnumbers" class="data fullwidth">
+			<thead>
+				<th scope="col">{{ 'Label' | t }}</th>
+				<th scope="col">{{ 'Key' | t }}</th>
+				<th scope="col">{{ 'Value' | t }}</th>
+				<th scope="col">{{ 'Delete' | t }}</th>
+			</thead>
+			<tbody>
+				{% for dynamicNumber in dynamicNumbers %}
+					<tr data-id="{{ dynamicNumber.id }}" data-name="{{ 'Dynamic Number for {label}' | t({ label: dynamicNumber.label }) }}">
+						<td><a href="{{ url('dynamicnumbers/' ~ dynamicNumber.id) }}">{{ dynamicNumber.label }}</a></td>
+						<td>[#{{ dynamicNumber.key }}]</td>
+						<td>{{ dynamicNumber.value }}</td>
+						<td><a class="delete icon" title="{{ 'Delete' | t }}"></a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+{% endset %}
+
+{% set js %}
+	new Craft.AdminTable({
+		tableSelector: '#dynamicnumbers',
+		noObjectsSelector: '#no-dynamicnumbers',
+		deleteAction: 'dynamicNumbers/delete'
+	});
+{% endset %}
+
+{% includeJs js %}
